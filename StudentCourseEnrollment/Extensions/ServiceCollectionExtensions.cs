@@ -18,7 +18,13 @@ namespace StudentCourseEnrollment.Extensions
             // Move the DbContext setup here
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, sqlOptions=>
+                                        sqlOptions.EnableRetryOnFailure(
+                                        maxRetryCount: 5,
+                                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                                        errorNumbersToAdd: null)
+                    )
+                );
 
             // Move your DI registrations here
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
