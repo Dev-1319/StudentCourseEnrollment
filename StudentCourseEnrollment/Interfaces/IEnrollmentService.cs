@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StudentCourseEnrollment.DTOs;
 
 namespace StudentCourseEnrollment.Interfaces
 {
@@ -11,6 +12,9 @@ namespace StudentCourseEnrollment.Interfaces
     {
         Task<bool> EnrollStudentAsync(int studentId, int courseId);
 
-        Task<List<Enrollment>> GetEnrollmentReportAsync();
+        //Task<List<Enrollment>> GetEnrollmentReportAsync();
+
+        Task<IEnumerable<EnrollmentReportDto>> GetEnrollmentReportAsync();
+
     }
 }

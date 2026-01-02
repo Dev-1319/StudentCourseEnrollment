@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StudentCourseEnrollment.DTOs;
 
 using StudentCourseEnrollment.Interfaces;
 
@@ -37,9 +38,20 @@ namespace StudentCourseEnrollment.DataAccess
             return await _repository.SaveChangesAsync();
         }
 
-        public async Task<List<Enrollment>> GetEnrollmentReportAsync()
+        public async Task<IEnumerable<EnrollmentReportDto>> GetEnrollmentReportAsync()
         {
-            return await _repository.GetFullEnrollmentDetailsAsync();
+            var enrollments = await _repository.GetFullEnrollmentDetailsAsync();
+
+            return enrollments.Select(a => new EnrollmentReportDto
+            {
+                StudentId = a.StudentId,
+                StudentName = a.Student.Name,
+                CourseName = a.Course.Title,
+                EnrollmentDate = DateTime.Now
+            }
+            ).ToList();
+            ;
+            //return await _repository.GetFullEnrollmentDetailsAsync();
         }
     }
 }
