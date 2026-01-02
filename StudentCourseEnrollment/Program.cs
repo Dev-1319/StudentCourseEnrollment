@@ -7,6 +7,8 @@ using StudentCourseEnrollment.Extensions;
 using StudentCourseEnrollment.Interfaces;
 
 
+//Below code is for console app
+/******************************************************
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
@@ -21,6 +23,48 @@ using IHost host = Host.CreateDefaultBuilder(args)
 // Simply resolve 'App' and run it
 var myApp = host.Services.GetRequiredService<App>();
 await myApp.RunAsync();
+******************************************************/
+
+//Moving from console app to WebAPI
+var builder = WebApplication.CreateBuilder(args);
+
+// --- MERGED PART ---
+// This uses your existing extension method logic
+builder.Services.AddProjectServices(builder.Configuration);
+
+// Add Web API specific services
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // This tells the API: "If you see an object you've already serialized, stop there."
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(); 
+
+var app = builder.Build();
+
+// --- THE NEW "APP.RUN" ---
+// Middleware pipeline replaces the "App.RunAsync" loop
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+
+// This tells the app to look for your EnrollmentController
+app.MapControllers();
+
+app.Run();
+
+
+
+
 
 /*///////////////////////////////
 

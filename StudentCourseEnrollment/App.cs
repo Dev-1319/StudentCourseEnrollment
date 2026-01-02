@@ -55,7 +55,7 @@ public class App
 
                     foreach (var enrollment in report)
                     {
-                        Console.WriteLine($"{enrollment.Id,-5} | {enrollment.Student.Name,-15} | {enrollment.Course.Title,-20} | {enrollment.EnrollmentDate.ToShortDateString(),-10}");
+                        Console.WriteLine($"{enrollment.StudentId,-5} | {enrollment.StudentName,-15} | {enrollment.CourseName,-20} | {enrollment.EnrollmentDate.ToShortDateString(),-10}");
                     }
                 }
             }
