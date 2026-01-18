@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using StudentCourseEnrollment.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace StudentCourseEnrollment.DataAccess
 {
@@ -51,6 +52,19 @@ namespace StudentCourseEnrollment.DataAccess
             if (enrollment != null) _context.Enrollments.Remove(enrollment);
         }
 
+        public async Task<bool> EnrollStudentAsync(int studentId, int courseId)
+        {
+            var enrollment = new Enrollment
+            {
+                StudentId = studentId,
+                CourseId = courseId,
+                EnrollmentDate = DateTime.Now
+            };
+
+            await _context.AddAsync(enrollment);
+            return await _context.SaveChangesAsync()>0;
+
+        }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;

@@ -16,5 +16,7 @@ namespace StudentCourseEnrollment.Interfaces
 
         Task<IEnumerable<EnrollmentReportDto>> GetEnrollmentReportAsync();
 
+        Task<string> EnrollStudent(EnrollmentRequestDto request);
+
     }
 }

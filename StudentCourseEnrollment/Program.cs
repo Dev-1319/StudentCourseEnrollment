@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using StudentCourseEnrollment.DataAccess;
 using StudentCourseEnrollment.Extensions;
 using StudentCourseEnrollment.Interfaces;
+using StudentCourseEnrollment.Middleware;
 
 
 //Below code is for console app
@@ -45,6 +46,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 // --- THE NEW "APP.RUN" ---
 // Middleware pipeline replaces the "App.RunAsync" loop
 if (app.Environment.IsDevelopment())

@@ -24,7 +24,6 @@ namespace StudentCourseEnrollment.DataAccess
         public async Task<bool> EnrollStudentAsync(int studentId, int courseId)
         {
             // 1. Business Logic: Check if student exists or course is full (Future step)
-
             // 2. Create the data object
             var enrollment = new Enrollment
             {
@@ -40,6 +39,8 @@ namespace StudentCourseEnrollment.DataAccess
 
         public async Task<IEnumerable<EnrollmentReportDto>> GetEnrollmentReportAsync()
         {
+           // throw new Exception("Test Crash!");
+
             var enrollments = await _repository.GetFullEnrollmentDetailsAsync();
 
             return enrollments.Select(a => new EnrollmentReportDto
@@ -52,6 +53,16 @@ namespace StudentCourseEnrollment.DataAccess
             ).ToList();
             ;
             //return await _repository.GetFullEnrollmentDetailsAsync();
+        }
+
+        public async Task<string> EnrollStudent(EnrollmentRequestDto enrollmentRequest)
+        {
+
+            var success = await _repository.EnrollStudentAsync(enrollmentRequest.StudentId, enrollmentRequest.CourseId);
+            if (!success) throw new Exception("Database failed to save enrollment.");
+            
+            return "Student Enrolled successfully.";
+
         }
     }
 }
