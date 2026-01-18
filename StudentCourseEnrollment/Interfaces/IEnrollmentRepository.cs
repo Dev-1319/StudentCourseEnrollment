@@ -19,5 +19,7 @@ namespace StudentCourseEnrollment.Interfaces
         Task DeleteAsync(int id);
 
         Task<bool> SaveChangesAsync();
+
+        public Task<bool> EnrollStudentAsync(int studentId, int couseId);
     }
 }

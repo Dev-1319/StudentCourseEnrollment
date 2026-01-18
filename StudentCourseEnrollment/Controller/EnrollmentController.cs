@@ -55,5 +55,12 @@ namespace StudentCourseEnrollment.Controller
             return Ok("Successfully enrolled!");
         }
 
+        [HttpPost("enroll")]
+        public async Task<IActionResult> Enroll([FromBody] EnrollmentRequestDto request)
+        {
+            var result = await _service.EnrollStudent(request);
+            return Ok(result);
+        }
+
     }
 }

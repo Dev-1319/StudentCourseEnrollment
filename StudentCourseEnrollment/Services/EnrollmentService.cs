@@ -54,5 +54,15 @@ namespace StudentCourseEnrollment.DataAccess
             ;
             //return await _repository.GetFullEnrollmentDetailsAsync();
         }
+
+        public async Task<string> EnrollStudent(EnrollmentRequestDto enrollmentRequest)
+        {
+
+            var success = await _repository.EnrollStudentAsync(enrollmentRequest.StudentId, enrollmentRequest.CourseId);
+            if (!success) throw new Exception("Database failed to save enrollment.");
+            
+            return "Student Enrolled successfully.";
+
+        }
     }
 }
